@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: fleet-service
+  config:
+    import: "optional:configserver:http://localhost:8888" # Points to your Config Server
+  cloud:
+    config:
+      fail-fast: true
+
+server:
+  port: 8090
