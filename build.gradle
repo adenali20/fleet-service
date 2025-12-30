@@ -37,9 +37,6 @@ dependencyManagement {
 }
 
 dependencies {
-    // Spring Cloud Config Client (version managed by BOM)
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-
     // Core Spring Boot 4 Starters
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
