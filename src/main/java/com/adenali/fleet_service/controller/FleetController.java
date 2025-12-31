@@ -25,7 +25,7 @@ public class FleetController {
     @GetMapping("/user/get")
     public String get(Authentication authentication){
         String caller = (String) authentication.getPrincipal();
-        return "Logged in user : "+caller+" for fleet service";
+        return "caller : "+caller+" for fleet service";
     }
 
     @GetMapping("/id")
