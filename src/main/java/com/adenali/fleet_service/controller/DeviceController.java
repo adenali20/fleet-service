@@ -19,12 +19,13 @@ public class DeviceController {
 
     @GetMapping("/devices")
     public  Map<String, Object> get(Authentication authentication){
+        log.info("caller is :  : "+authentication.getPrincipal()+" for device service");
         String caller = (String) authentication.getPrincipal();
         Map<String, Object> map = new HashMap<>();
         map.put("owner", caller);
         map.put("service", "device service");
         map.put("deviceList",List.of("front camera","rear camera","door sensor"));
-
+        log.info("device list : "+map);
         return map;
     }
 
