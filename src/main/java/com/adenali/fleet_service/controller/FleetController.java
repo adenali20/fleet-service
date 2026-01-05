@@ -1,5 +1,7 @@
 package com.adenali.fleet_service.controller;
 
+import com.adenali.fleet_service.domain.Fleet;
+import com.adenali.fleet_service.repository.FleetRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -15,12 +17,41 @@ import org.springframework.web.bind.annotation.*;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
 
 @Slf4j
+@RequestMapping("/api/fleetservice")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/fleetservice")
+
 public class FleetController {
+
+
+    private final FleetRepository fleetRepository;
+
+
+    @PostMapping("/owners/{ownerId}/fleets")
+    public Fleet create(@PathVariable String ownerId, @RequestBody Fleet fleet) {
+        fleet.setOwnerId(ownerId);
+        return fleetRepository.save(fleet);
+    }
+
+
+    @GetMapping("/owners/{ownerId}/fleets")
+    public List<Fleet> getByOwner(@PathVariable String ownerId) {
+        return fleetRepository.findByOwnerId(ownerId);
+    }
+
+
+    @GetMapping("/fleets/{fleetId}")
+    public Fleet getById(@PathVariable String fleetId) {
+        return fleetRepository.findById(fleetId).orElseThrow();
+    }
+
 
     @GetMapping("/user/get")
     public String get(Authentication authentication){
@@ -33,6 +64,5 @@ public class FleetController {
     public String getId(){
         return "234";
     }
-
 }
 

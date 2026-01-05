@@ -4,20 +4,9 @@ server:
 spring:
   application:
     name: fleet-service
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-    datasource:
-      url: jdbc:h2:mem:testdb
-      driver-class-name: org.h2.Driver
-      username: sa
-      password:
+  mongodb:
+    uri: {MONGO_URI}
 
-    jpa:
-      hibernate:
-        ddl-auto: update
-      show-sql: true
 
 jwt:
   secret: jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4
