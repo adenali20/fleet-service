@@ -4,8 +4,9 @@ server:
 spring:
   application:
     name: fleet-service
-  mongodb:
-    uri: ${MONGO_URI:mongodb://localhost:27017/fleet}
+  data:
+    mongodb:
+      uri: ${ MONGO_URI }
 
 
 jwt:
