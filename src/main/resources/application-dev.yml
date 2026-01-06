@@ -4,7 +4,7 @@ spring:
   application:
     name: fleet-service
   mongodb:
-    uri: { MONGO_URI }
+    uri: ${ MONGO_URI }
 
 jwt:
   secret: ${JWT_SECRET_KEY}
