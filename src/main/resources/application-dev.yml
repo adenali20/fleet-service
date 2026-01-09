@@ -8,8 +8,11 @@ spring:
       uri: ${ MONGO_URI }
 
   graphql:
+    http:
+      path: /api/fleetservice/graphql
     graphiql:
       enabled: true
+      path: /api/fleetservice/graphiql
 
 jwt:
   secret: ${JWT_SECRET_KEY}

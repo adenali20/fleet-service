@@ -9,6 +9,8 @@ spring:
       uri: ${ MONGO_URI }
 
   graphql:
+    http:
+      path: /api/fleetservice/graphql
     graphiql:
       enabled: true
 
