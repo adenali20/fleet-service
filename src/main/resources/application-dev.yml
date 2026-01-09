@@ -3,8 +3,9 @@ server:
 spring:
   application:
     name: fleet-service
-  mongodb:
-    uri: ${ MONGO_URI }
+  data:
+    mongodb:
+      uri: ${ MONGO_URI }
 
   graphql:
     http:
