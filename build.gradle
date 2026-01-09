@@ -37,6 +37,11 @@ dependencyManagement {
 }
 
 dependencies {
+
+    // Core GraphQL support for Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'com.graphql-java:graphql-java-extended-scalars:22.0'
+
     // Core Spring Boot 4 Starters
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
@@ -59,6 +64,13 @@ dependencies {
     // Specific Spring Boot 4 test starter for MVC slices
     testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Specific support for @GraphQlTest and GraphQlTester
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
+    // This provides the GraphQlTester utility used inside the tests
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-graphql-test'
+
 }
 
 tasks.named('test') {

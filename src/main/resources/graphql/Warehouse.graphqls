@@ -1,0 +1,81 @@
+scalar JSON
+
+
+type Fleet {
+    id: ID
+    type: String
+    name: String
+    model: String
+    year: Int
+    brand: String
+    plate: String
+
+    owner: Owner
+    metadata: JSON
+
+    devices: [Device]
+
+    createdAt: String
+    updatedAt: String
+}
+
+type Device {
+    id: ID
+    fleetId: ID
+
+    name: String
+    description: String
+    carrier: String
+    network: String
+    number: String
+    activated: Boolean
+
+    metadata: JSON
+
+    createdAt: String
+    updatedAt: String
+}
+
+type Owner {
+    ownerId: String
+    name: String
+}
+
+input OwnerInput {
+    ownerId: String
+    name: String
+}
+
+input CreateFleetInput {
+    type: String
+    name: String
+    model: String
+    year: Int
+    brand: String
+    plate: String
+    owner: OwnerInput
+    metadata: JSON
+}
+
+input CreateDeviceInput {
+    fleetId: ID
+    name: String
+    description: String
+    carrier: String
+    network: String
+    number: String
+    activated: Boolean = true
+    metadata: JSON
+}
+type Query {
+    fleet(id: ID!): Fleet
+    fleets: [Fleet!]!
+    device(id: ID!): Device
+    devicesByFleet(fleetId: ID!): [Device!]!
+}
+type Mutation {
+
+    createFleet(input: CreateFleetInput!): Fleet!
+
+    attachDevice(input: CreateDeviceInput!): Device!
+}

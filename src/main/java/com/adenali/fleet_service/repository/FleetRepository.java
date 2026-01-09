@@ -3,10 +3,9 @@ package com.adenali.fleet_service.repository;
 import com.adenali.fleet_service.domain.Fleet;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-
-import java.util.List;
+import java.util.Optional;
 
 
 public interface FleetRepository extends MongoRepository<Fleet, String> {
-    List<Fleet> findByOwnerId(String ownerId);
+    Optional<Fleet> findByPlate(String plate);
 }

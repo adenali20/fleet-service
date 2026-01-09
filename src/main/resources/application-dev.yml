@@ -7,5 +7,9 @@ spring:
     mongodb:
       uri: ${ MONGO_URI }
 
+  graphql:
+    graphiql:
+      enabled: true
+
 jwt:
   secret: ${JWT_SECRET_KEY}

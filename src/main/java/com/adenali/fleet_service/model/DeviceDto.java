@@ -1,21 +1,17 @@
-package com.adenali.fleet_service.domain;
+package com.adenali.fleet_service.model;
+
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.util.Map;
 
-@Document(collection = "devices")
 @Data
 @Builder
-public class Device {
+public class DeviceDto {
 
-    @Id
     private String id;
-
     private String fleetId;
 
     private String name;

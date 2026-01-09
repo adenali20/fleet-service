@@ -8,6 +8,9 @@ spring:
     mongodb:
       uri: ${ MONGO_URI }
 
+  graphql:
+    graphiql:
+      enabled: true
 
 jwt:
   secret: jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4
