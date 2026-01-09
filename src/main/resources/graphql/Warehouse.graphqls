@@ -19,6 +19,24 @@ type Fleet {
     updatedAt: String
 }
 
+type FleetDto {
+    id: ID
+    type: String
+    name: String
+    model: String
+    year: Int
+    brand: String
+    plate: String
+
+    owner: Owner
+    metadata: JSON
+
+    devices: [Device]
+
+    createdAt: String
+    updatedAt: String
+}
+
 type Device {
     id: ID
     fleetId: ID
@@ -67,8 +85,25 @@ input CreateDeviceInput {
     activated: Boolean = true
     metadata: JSON
 }
+
+type FleetConnection {
+    edges: [FleetEdge]
+    pageInfo: PageInfo
+}
+
+type FleetEdge {
+    node: FleetDto
+    cursor: String
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    endCursor: String
+}
+
 type Query {
     fleet(id: ID!): Fleet
+    fleetsWithPagination(after: String, size: Int!): FleetConnection!
     fleets: [Fleet!]!
     device(id: ID!): Device
     devicesByFleet(fleetId: ID!): [Device!]!

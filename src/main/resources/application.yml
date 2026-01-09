@@ -11,6 +11,7 @@ spring:
     http:
       path: /api/fleetservice/graphql
     graphiql:
+      path: /graphiql
       enabled: true
 
 jwt:

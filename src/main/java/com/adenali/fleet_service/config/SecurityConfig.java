@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable()) // Correct for stateless APIs
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().hasRole("GATEWAY")
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(gatewaySecretFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)

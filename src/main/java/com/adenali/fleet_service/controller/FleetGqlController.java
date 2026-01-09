@@ -3,11 +3,13 @@ package com.adenali.fleet_service.controller;
 import com.adenali.fleet_service.domain.Device;
 import com.adenali.fleet_service.domain.Fleet;
 import com.adenali.fleet_service.domain.Owner;
-import com.adenali.fleet_service.model.CreateDeviceInput;
-import com.adenali.fleet_service.model.CreateFleetInput;
+import com.adenali.fleet_service.model.*;
 import com.adenali.fleet_service.repository.DeviceRepository;
 import com.adenali.fleet_service.repository.FleetRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Limit;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -15,7 +17,9 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,6 +36,42 @@ public class FleetGqlController {
     @QueryMapping
     public List<Fleet> fleets() {
         return fleetRepository.findAll();
+    }
+
+    @QueryMapping
+    public FleetConnection fleetsWithPagination(@Argument String after, @Argument Integer size) {
+        // Fetch one extra to detect next page
+        PageRequest pageable = PageRequest.of(0, size + 1);
+
+
+        List<Fleet> fleets = (after == null)
+                ? fleetRepository.findAll(pageable).getContent()
+                : fleetRepository.findFleetByIdAfter(after, pageable);
+
+
+        boolean hasNextPage = fleets.size() > size;
+
+
+        if (hasNextPage) {
+            fleets = fleets.subList(0, size);
+        }
+
+
+        List<FleetEdge> edges = fleets.stream()
+                .map(fleet->FleetEdge.builder()
+                        .node(FleetDto.builder().name(fleet.getName()).id(fleet.getId()).build())
+                        .cursor(fleet.getId())
+                        .build())
+                .collect(Collectors.toList());
+
+
+        String endCursor = edges.isEmpty()
+                ? null
+                : edges.get(edges.size() - 1).cursor;
+
+
+        return FleetConnection.builder().edges(edges)
+                .pageInfo(PageInfo.builder().hasNextPage(hasNextPage).endCursor(endCursor).build()).build();
     }
 
     @QueryMapping
