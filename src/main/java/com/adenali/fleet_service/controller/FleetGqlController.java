@@ -74,22 +74,6 @@ public class FleetGqlController {
                 .pageInfo(PageInfo.builder().hasNextPage(hasNextPage).endCursor(endCursor).build()).build();
     }
 
-    @QueryMapping
-    public Device device(@Argument String id) {
-        return deviceRepository.findById(id).orElse(null);
-    }
-
-    @QueryMapping
-    public List<Device> devicesByFleet(@Argument String fleetId) {
-        return deviceRepository.findByFleetId(fleetId);
-    }
-
-
-    @SchemaMapping(typeName = "Fleet", field = "devices")
-    public List<Device> devices(Fleet fleet) {
-        return devicesByFleet(fleet.getId());
-    }
-
     @MutationMapping
     public Fleet createFleet(@Argument CreateFleetInput input) {
         Owner owner=null;

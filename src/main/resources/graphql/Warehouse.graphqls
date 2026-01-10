@@ -102,11 +102,8 @@ type PageInfo {
 }
 
 type Query {
-    fleet(id: ID!): Fleet
     fleetsWithPagination(after: String, size: Int!): FleetConnection!
     fleets: [Fleet!]!
-    device(id: ID!): Device
-    devicesByFleet(fleetId: ID!): [Device!]!
 }
 type Mutation {
 
