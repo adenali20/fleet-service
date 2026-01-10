@@ -13,9 +13,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     private final GatewaySecretFilter gatewaySecretFilter;
 
-    // Spring injects the already-populated filter here
     public SecurityConfig(GatewaySecretFilter gatewaySecretFilter) {
         this.gatewaySecretFilter = gatewaySecretFilter;
     }
@@ -23,14 +23,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(csrf -> csrf.disable()) // Correct for stateless APIs
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        // ✅ allow Swagger
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
+                        // 🔐 everything else must come from Gateway
                         .anyRequest().hasRole("GATEWAY")
                 )
-                .addFilterBefore(gatewaySecretFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(
+                        gatewaySecretFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
+
         return http.build();
     }
 }

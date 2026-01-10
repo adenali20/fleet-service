@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/fleetservice")
+@RequestMapping("/api/fleetservice")
 public class FleetController {
 
     private final FleetService fleetService;
